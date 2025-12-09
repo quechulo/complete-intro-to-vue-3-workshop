@@ -9,7 +9,7 @@
   <body>
     <div id="app">
       <p v-if="characterList.length === 0">There are no characters</p>
-      <ul v-else-if="characterList.length % 2 === 0">
+      <ul>
         <li v-for="character in characterList">
           <p>{{ character.name }}</p>
           <button @click="favoriteCharacter(character)">⭐ Favorite</button>
@@ -34,7 +34,9 @@
           }}
         </span>
       </p>
-      <p v-else>There are odd characters!</p>
+      
+      <p>Added characters to favourites by users: {{ howManyFavs }}</p>
+      <p>most Favourites addings: {{ mostFavs }}</p>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -60,6 +62,17 @@
           ],
           favoriteList: []
         }),
+        computed: {
+          howManyFavs() {
+            // const result = this.favoriteList.reduce(char => char === character, 0);
+            const result = this.favoriteList.length;
+            console.log(result)
+            return result;
+          },
+          mostFavs() {
+            return this.findMostFrequent();
+          }
+        },
         methods: {
           addNewCharacter() {
             this.characterList.push(this.newCharacter)
@@ -67,7 +80,25 @@
           },
           favoriteCharacter(character) {
             this.favoriteList.push(character)
-          }
+          },
+          findMostFrequent() {
+                const frequency = new Map();
+                let maxCount = 0;
+                let mostFrequent = null;
+                
+                for (const item of this.favoriteList) {
+                    const count = (frequency.get(item) || 0) + 1;
+                    frequency.set(item, count);
+                    
+                    if (count > maxCount) {
+                        maxCount = count;
+                        mostFrequent = item;
+                    }
+                }
+                console.log(frequency)
+                
+                return mostFrequent;
+            }
         }
       }).mount('#app')
     </script>
