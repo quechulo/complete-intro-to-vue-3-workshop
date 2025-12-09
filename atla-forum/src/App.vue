@@ -1,4 +1,5 @@
 <script>
+import StatsForCharacters from "./components/StatsForCharacters.vue";
 export default {
   data: () => ({
     newCharacter: {
@@ -25,26 +26,8 @@ export default {
     ],
     favoriteList: [],
   }),
-  computed: {
-    benderStatistics() {
-      const elements = ["Air", "Earth", "Fire", "Water"];
-      const statistics = {
-        Air: 0,
-        Earth: 0,
-        Water: 0,
-        Fire: 0,
-      };
-
-      this.characterList.forEach((character) => {
-        elements.forEach((element) => {
-          if (character.element.indexOf(element) > -1) {
-            statistics[element] += 1;
-          }
-        });
-      });
-
-      return statistics;
-    },
+  components: {
+    StatsForCharacters,
   },
   methods: {
     addNewCharacter() {
@@ -59,15 +42,7 @@ export default {
 </script>
 
 <template>
-  <h2>Statistics</h2>
-  <ul>
-    <li
-      v-for="(stat, type) in benderStatistics"
-      :key="`bender-${stat}-${type}`"
-    >
-      {{ type }}: {{ stat * 2 }}
-    </li>
-  </ul>
+  <StatsForCharacters :characters="characterList" />
   <h2>Characters</h2>
   <p v-if="characterList.length === 0">There are no characters</p>
   <ul v-else-if="characterList.length % 2 === 0">
