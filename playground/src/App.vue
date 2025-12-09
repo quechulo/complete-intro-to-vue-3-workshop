@@ -51,11 +51,16 @@ export default {
       return { name, favouriteFood };
     },
   },
+  methods: {
+    changeUserName(name) {
+      this.userData.name = name;
+    },
+  },
 };
 </script>
 
 <template>
-  <UserCard :user="refinedUserData" />
+  <UserCard :user="refinedUserData" @changeUserName="changeUserName($event)" />
   <BaseCounter />
   <hr />
   <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
