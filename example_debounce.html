@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Watchers Example - Debounced API Calls</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .search-container {
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+    }
+    .status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .loading {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .result-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .no-results {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Vue Watchers - Debounced API Calls Example</h1>
+    
+    <div class="search-container">
+      <label for="search">Search for users:</label><br>
+      <input 
+        id="search" 
+        v-model="searchQuery" 
+        placeholder="Type to search users..."
+      >
+    </div>
+    
+    <div v-if="loading" class="status loading">
+      Searching for "{{ searchQuery }}"...
+    </div>
+    
+    <div class="results">
+      <h2>Results:</h2>
+      <div v-if="results.length === 0 && searchQuery" class="no-results">
+        No results found for "{{ searchQuery }}"
+      </div>
+      <div v-else-if="results.length === 0" class="no-results">
+        Enter a search term to see results
+      </div>
+      <div v-else>
+        <div 
+          v-for="user in results" 
+          :key="user.id" 
+          class="result-item"
+        >
+          <h3>{{ user.name }}</h3>
+          <p>Email: {{ user.email }}</p>
+          <p>Phone: {{ user.phone }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, watch } = Vue;
+    
+    createApp({
+      setup() {
+        const searchQuery = ref('');
+        const results = ref([]);
+        const loading = ref(false);
+        let debounceTimer = null;
+        
+        // Simulated API call function
+        const fetchUsers = async (query) => {
+          // In a real app, this would be an actual API call
+          // For this example, we'll simulate an API response
+          
+          // Show loading state
+          loading.value = true;
+          
+          // Simulate network delay
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Mock data
+          const mockUsers = [
+            { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
+            { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '098-765-4321' },
+            { id: 3, name: 'Bob Johnson', email: 'bob@example.com', phone: '555-123-4567' },
+            { id: 4, name: 'Alice Williams', email: 'alice@example.com', phone: '444-987-6543' },
+            { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', phone: '333-876-5432' }
+          ];
+          
+          // Filter results based on query
+          const filteredResults = mockUsers.filter(user => 
+            user.name.toLowerCase().includes(query.toLowerCase()) ||
+            user.email.toLowerCase().includes(query.toLowerCase())
+          );
+          console.log(filteredResults)
+          
+          // Update results
+          results.value = filteredResults;
+          loading.value = false;
+        };
+        
+        // Watcher that triggers debounced API calls
+        watch(searchQuery, (newQuery, oldQuery) => {
+          // Clear previous timer
+          if (debounceTimer) {
+            clearTimeout(debounceTimer);
+          }
+          
+          // If query is empty, clear results
+          if (!newQuery) {
+            results.value = [];
+            return;
+          }
+          fetchUsers(newQuery);
+          // Set new timer for debounced API call
+        //   debounceTimer = setTimeout(() => {
+        //     fetchUsers(newQuery);
+        //   }, 300); // 300ms debounce delay
+        });
+        
+        // Return reactive data and functions
+        return {
+          searchQuery,
+          results,
+          loading
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
