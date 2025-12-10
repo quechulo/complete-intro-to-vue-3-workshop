@@ -1,11 +1,13 @@
 <script>
 import UserCard from "./components/user-card.vue";
 import BaseCounter from "./components/base-counter.vue";
+import BaseButton from "./components/BaseButton.vue";
 
 export default {
   components: {
     BaseCounter,
     UserCard,
+    BaseButton,
   },
   data() {
     return {
@@ -64,17 +66,9 @@ export default {
 <template>
   <UserCard :user="refinedUserData" @change-name="changeName" />
   <BaseCounter />
-  <hr />
-  <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
-  <p v-else>Odd: {{ message }}</p>
-  <ul v-for="(item, index) in listOfNumbers" :key="`item-${index}`">
-    <li>
-      {{ item.id }}
-      <ul>
-        <li v-for="(number, index) in item.list" :key="`number-${index}`">
-          {{ number }}
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <br />
+  <br />
+  <br />
+
+  <BaseButton />
 </template>
