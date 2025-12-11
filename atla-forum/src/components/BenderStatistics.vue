@@ -1,5 +1,10 @@
 <script>
+import StatItem from "./StatItem.vue";
+
 export default {
+  components: {
+    StatItem,
+  },
   props: {
     characters: {
       type: Array,
@@ -37,7 +42,7 @@ export default {
       v-for="(stat, type) in benderStatistics"
       :key="`bender-${stat}-${type}`"
     >
-      {{ type }}: {{ stat * 2 }}
+      <StatItem :type="type">{{ stat }}</StatItem>
     </li>
   </ul>
 </template>
