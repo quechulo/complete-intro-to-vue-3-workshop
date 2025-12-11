@@ -5,6 +5,7 @@ export default {
   data: () => ({
     users: [],
     loading: false,
+    newUser: {},
   }),
   methods: {
     async fetchUsers() {
@@ -15,6 +16,12 @@ export default {
     },
     getUuid() {
       return uuidv4();
+    },
+    addUser() {
+      this.users[1].additional = this.users[2];
+      const toPush = { ...this.users[1] };
+      this.users[2] = { a: 'changed' };
+      this.users.push(toPush);
     },
   },
   created() {
@@ -34,6 +41,7 @@ export default {
         </li>
       </ul>
     </div>
+    <button @click="addUser"></button>
   </main>
 </template>
 
