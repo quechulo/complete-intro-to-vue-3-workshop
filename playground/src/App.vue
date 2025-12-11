@@ -2,12 +2,14 @@
 import UserCard from "./components/user-card.vue";
 import BaseCounter from "./components/base-counter.vue";
 import BaseButton from "./components/BaseButton.vue";
+import BaseLayout from "./components/base-layout.vue";
 
 export default {
   components: {
     BaseCounter,
     UserCard,
     BaseButton,
+    BaseLayout,
   },
   data() {
     return {
@@ -70,5 +72,10 @@ export default {
   <br />
   <br />
 
-  <BaseButton />
+  <BaseButton> Home - Hell </BaseButton>
+  <BaseLayout>
+    <template v-slot:aside> Aside content </template>
+    <template v-slot:main><UserCard :user="refinedUserData" /></template>
+    <template v-slot:footer>stupka</template>
+  </BaseLayout>
 </template>

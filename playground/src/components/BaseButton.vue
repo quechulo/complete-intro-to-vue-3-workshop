@@ -14,5 +14,7 @@ export default {
 </script>
 
 <template>
-  <button>{{ icon }} - {{ text }}</button>
+  <button>
+    <slot />
+  </button>
 </template>
