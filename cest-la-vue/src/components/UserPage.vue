@@ -33,6 +33,7 @@ userList.value = await fetchUsers();
         :key="`user-${user.id}`"
       />
     </ul>
+    <button>click</button>
   </main>
 </template>
 
