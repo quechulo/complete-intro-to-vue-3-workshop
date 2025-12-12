@@ -7,6 +7,7 @@ const emits = defineEmits(["change-region"]);
 const props = defineProps({
   region: {
     type: String,
+    default: "elo",
   },
 });
 
@@ -26,7 +27,7 @@ const pokedex = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151").then(
 
 const changeRegionName = () => {
   regionName.value = "Hoenn";
-  emits("change-region");
+  emits("change-region", "elo siemasz!");
 };
 </script>
 
