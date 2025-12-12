@@ -27,7 +27,7 @@ export default {
 <template>
   <h1>User: {{ user.name }}</h1>
   <h2>New Counter</h2>
-  <p>Global Count: {{ countStore.globalCount }}</p>
+  <p :class="$style.p">Global Count: {{ countStore.globalCount }}</p>
   <p>Local Count: {{ countStore.localCount }}</p>
   <button :class="$style.button" @click="countStore.globalCount += 10">
     Global
@@ -45,5 +45,10 @@ export default {
 <style module>
 .button {
   border: 10px solid green;
+}
+.p {
+  background-color: rgb(35, 184, 55);
+  width: 10%;
+  height: 10%;
 }
 </style>

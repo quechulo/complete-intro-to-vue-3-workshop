@@ -3,7 +3,7 @@ import BaseCounter from "./components/base-counter.vue";
 import UserCard from "./components/user-card.vue";
 import { ref } from "vue";
 
-const colorPreference = ref("black");
+const colorPreference = ref("blue");
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const colorPreference = ref("black");
     <h2>{{ colorPreference }}</h2>
     <input type="color" v-model="colorPreference" />
     <BaseCounter />
-    <UserCard :user="{ name: 'Ben', food: 'Ramen' }" />
+    <UserCard :user="{ name: 'Ben', food: 'Ramen' }" />>
   </div>
 </template>
 
