@@ -6,11 +6,28 @@ export default {
       required: true,
     },
   },
+  computed: {
+    displayName() {
+      return this.user?.name || "Unknown User";
+    },
+    displayWebsite() {
+      return this.user?.website || "No website";
+    },
+  },
+  methods: {
+    goToUser() {
+      this.$router.push(`/user/${this.user.id}`);
+    },
+  },
 };
 </script>
 
 <template>
-  <li :class="$style['user-card']">{{ user.name }}: {{ user.website }}</li>
+  <router-link :to="`/user/${user.id}`">
+    <li :class="$style['user-card']">
+      {{ displayName }}: {{ displayWebsite }}
+    </li>
+  </router-link>
 </template>
 
 <style module>
